@@ -19,7 +19,7 @@ class Websearch:
     def search(self, query_string):
         links = getSearchJSON(query_string)
         search_contexts = self.get_search_contexts(links, query_string)
-        return self.llm.getFinalAnswer(query_string, search_contexts)
+        return (self.llm.getFinalAnswer(query_string, search_contexts), links)
 
 
     def get_search_contexts(self, links, prompt):

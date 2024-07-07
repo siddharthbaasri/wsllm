@@ -15,6 +15,7 @@ export default function Page() {
   const [inputText, setInputText] = useState("");
   const [chatHistory, setChatHistory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sources, setSources] = useState([])
 
   function submissionHandler() {
     const userText: string = inputText;
@@ -31,7 +32,9 @@ export default function Page() {
       if (!response.ok) {
         throw new Error('Network response was not ok ' + response.statusText);
       }
-      setChatHistory(await response.text())
+      let responseJSON = await response.json()
+      setChatHistory(responseJSON['llmResponse'])
+      setSources(responseJSON['links'])
       //setChatHistory("## Text")
     }
     catch (error) {
@@ -41,6 +44,19 @@ export default function Page() {
       setLoading(false);
     }
   } 
+
+  function Sources() {
+    return (
+      <ul className="list-disc pl-5 space-y-2">
+        {sources.map((dict, index) => (
+          <li key={index}>
+            [{index + 1}]
+            &nbsp; <a href = {dict['url']} target="_blank" rel="noopener noreferrer" className="text-black-500 hover:underline">{dict['url']}</a>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -53,7 +69,11 @@ export default function Page() {
               {chatHistory}
             </ReactMarkdown> :
             <><Skeleton height={30} width={200} />
-            <Skeleton height={20} count={3} /></>}            
+            <Skeleton height={20} count={3} /></>}
+            
+            <div className = 'text-left font-semibold text-lg mb-2'>Sources: </div>
+            {!loading ? <Sources/> : <><Skeleton height={30} width={200} />
+            <Skeleton height={20} count={3} /></>}
           </div>
         </div>
       )}
