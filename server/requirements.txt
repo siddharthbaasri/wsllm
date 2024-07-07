@@ -5,4 +5,5 @@ chromadb
 bs4
 langchain_text_splitters
 groq
+flask_cors
 

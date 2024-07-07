@@ -1,9 +1,11 @@
 from flask import Flask, render_template, jsonify, request
 from dotenv import load_dotenv
 from websearch import Websearch
+from flask_cors import CORS
 
 app = Flask(__name__)
 load_dotenv()
+CORS(app)
 search_client = Websearch()
 
 @app.route("/search")
