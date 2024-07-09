@@ -71,18 +71,27 @@ export default function Page() {
             <><Skeleton height={30} width={200} />
             <Skeleton height={20} count={3} /></>}
             
-            <div className = 'text-left font-semibold text-lg mb-2'>Sources: </div>
+            <div className = 'text-left font-semibold text-lg mb-2 pt-10'>Sources: </div>
             {!loading ? <Sources/> : <><Skeleton height={30} width={200} />
             <Skeleton height={20} count={3} /></>}
           </div>
         </div>
       )}
   
-    <div className={classNames(
-      'bg-white p-4 flex justify-center',
-      isFirstQuestion ? 'flex-grow flex items-center' : 'sticky bottom-0'
-    )}>
-        <div className="w-full max-w-3xl flex">
+      <div className={classNames(
+        'bg-white p-4 flex justify-center', // Always apply flex and flex-col
+        isFirstQuestion ? 'flex-grow flex-col items-center' : 'sticky bottom-0'
+        
+      )}>
+      
+          {isFirstQuestion && (
+            <h1 className="text-3xl text-center py-10 text-[#4B2E83]">
+              UW Answer Bot: Ask Anything about UW below
+            </h1>
+          )}
+        
+        
+        <div className="w-full max-w-3xl flex justify-center">
           <input
             type="text"
             value={inputText}
@@ -91,7 +100,7 @@ export default function Page() {
             className="flex-grow p-3 text-lg border border-gray-300 rounded-l-lg shadow-md"
           />
           <button 
-            className="w-16 text-lg text-white bg-blue-500 rounded-r-lg shadow-md hover:bg-blue-600 flex items-center justify-center"
+            className="w-16 text-lg text-white bg-[#4B2E83] hover:bg-[#B7A57A] rounded-r-lg shadow-md flex items-center justify-center"
             onClick={submissionHandler}
           >
             ↑
